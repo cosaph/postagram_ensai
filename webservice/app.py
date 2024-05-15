@@ -66,6 +66,9 @@ async def post_a_post(post: Post, authorization: str | None = Header(default=Non
 
 @app.get("/posts")
 async def get_all_posts(user: Union[str, None] = None):
+    """
+    Cette fonction permet de récupérer tous les posts
+    """
     if user is None:
         posts = table.scan()["Items"]
     else:
