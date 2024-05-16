@@ -64,18 +64,10 @@ async def post_a_post(post: Post, authorization: str | None = Header(default=Non
     return items
 
 
-from typing import Union
-import boto3
-
-app = FastAPI()
-table = boto3.resource('dynamodb').Table('posts')
-s3_client = boto3.client('s3')
-bucket = 'your-s3-bucket-name'
-
 @app.get("/posts")
 async def get_all_posts(user: Union[str, None] = None):
     """
-    Cette fonction permet de récupérer tous les posts
+    Cette fonction permet de récupérer tous les articles
     """
     if user is None:
         posts = table.scan()["Items"]
@@ -99,7 +91,7 @@ async def get_all_posts(user: Union[str, None] = None):
                     'Key': image_name
                 },
             )
-            post['image_url'] = presigned_url
+            post['image'] = presigned_url
 
     return posts
 
